@@ -1,9 +1,12 @@
+
+// Alternative way of doing require() SAME AS const fs = require('fs) // This is mostly used in modern development
 import fs from 'fs'
 import path from 'path'
 import dotenv from 'dotenv'
 
 dotenv.config()
 
+// Look for a folder called data, if does not exist, then create it
 const DATA_DIR = path.join(import.meta.dirname, 'data')
 if (!fs.existsSync(DATA_DIR)) {
     fs.mkdirSync(DATA_DIR)
@@ -12,6 +15,7 @@ if (!fs.existsSync(DATA_DIR)) {
 const WEATHER_FILE = path.join(DATA_DIR, 'weather.json')
 const LOG_FILE = path.join(DATA_DIR, 'weather_log.csv')
 
+// Make a HTTP GET request using the apiKey and City values
 export async function fetchWeather() {
     const apiKey = process.env.WEATHER_API_KEY
     const city = process.env.CITY
@@ -23,8 +27,9 @@ export async function fetchWeather() {
             throw new Error(`HTTP error! Status: ${response.status}`)
         }
 
+        // Change the date format from the exisiting format into the ISO format
         const data = await response.json()
-        const nowUTC = new Date().toISOString()
+        const nowUTC = new Date().toISOString() // yyyy-mm-dd
         data._last_updated_utc = nowUTC
         fs.writeFileSync(WEATHER_FILE, JSON.stringify(data, null, 2))
 

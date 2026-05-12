@@ -1,4 +1,4 @@
-import express from 'express'
+import express from 'express' // ES6 module - JS file with exported code
 import dotenv from 'dotenv'
 import fs from 'fs'
 import path from 'path'
@@ -12,7 +12,7 @@ const PORT = process.env.PORT || 5000
 
 const DATA_DIR = path.join(import.meta.dirname, 'data')
 const WEATHER_FILE = path.join(DATA_DIR, 'weather.json')
-const LOG_FILE = path.join(DATA_DIR, 'weather_log.csv')
+const LOG_FILE = path.join(DATA_DIR, 'weather_log.csv') // First line of a CSV file are the headers
 
 // Serve static files (HTML, CSS, JS)
 app.use(express.static(path.join(import.meta.dirname, 'public')))
